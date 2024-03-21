@@ -1,3 +1,9 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 body {
 	margin: 0;
 }
@@ -90,4 +96,63 @@ body {
 }
 .converter-center {
 	width: 90px;
+	padding-top: 150px;
+	display: inline-block;
+	vertical-align: top;
 }
+
+.converter-center-reverse {
+	width: 50px;
+	min-height: 50px;
+	background: url(https://s.rbk.ru/v5_cash_static/cash-1.5.97/styles/images/transfer.svg) no-repeat;
+	background-size: 50px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.calc-currency {
+	width: 926px;
+    padding: 20px 30px;
+    position: absolute;
+    top: 90px;
+    z-index: 105;
+    background: #fff;
+    box-shadow: 0 8px 40px 0 rgba(0,0,0,.2);
+    border-radius: 4px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.calc-currency-column {
+	display: flex;
+	flex-direction: column;
+	width: 245px;
+    float: left;
+}
+
+.calc-currency-column-center {
+	margin: 0 65px;
+}
+
+.calc-currency-row {
+	margin: 2px 0;
+    padding: 8px 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.cacl-currency-name {
+    width: 190px;
+    float: left;
+}
+
+.calc-currency-sign {
+	width: 30px;
+    float: right;
+    text-align: right;
+    font-size: 12px;
+    font-family: 'Helvetica CY', Arial, sans-serif;
+}
+
