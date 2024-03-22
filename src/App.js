@@ -19,11 +19,12 @@ const App =  () => {
 			.then(res => {
 				console.log('res', res);
 				let defaultCurrencyArray = res.filter(item => item.CharCode === 'USD' || item.CharCode === 'EUR' || item.CharCode === 'GBP')
+				defaultCurrencies.sort((a, b) => a.localeCompare(b))
 				let currenciesArray = res.filter(item => !Boolean(exception.find((el) => {
 					return el === item.CharCode
 				})))
-				currenciesArray.sort((a, b) => a - b);
-				currenciesArray = [...{ ID: 'R1', Name: 'Российский рубль', CharCode: 'RUR', Nominal: 1, NumCode: 001, },...defaultCurrencyArray, ...currenciesArray]
+				currenciesArray.sort((a, b) => a.Name.localeCompare(b.Name));
+				currenciesArray = [{ ID: 'R1', Name: 'Российский рубль', CharCode: 'RUR', Nominal: 1, NumCode: '001', Value: 1 },...defaultCurrencyArray, ...currenciesArray]
 				console.log('ca > ', currenciesArray);
 			setCurrencies(currenciesArray);
 		})

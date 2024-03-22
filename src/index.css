@@ -111,10 +111,10 @@ body {
 }
 
 .calc-currency {
-	width: 926px;
+	max-width: 850px;
     padding: 20px 30px;
     position: absolute;
-    top: 90px;
+    top: 200px;
     z-index: 105;
     background: #fff;
     box-shadow: 0 8px 40px 0 rgba(0,0,0,.2);
@@ -141,18 +141,22 @@ body {
     overflow: hidden;
     cursor: pointer;
     border-radius: 4px;
+	display: inline-flex;
+}
+.calc-currency-row:hover {
+	background-color: #86b5db71;
 }
 
 .cacl-currency-name {
     width: 190px;
     float: left;
+	font-size: 14px;
 }
 
 .calc-currency-sign {
 	width: 30px;
     float: right;
     text-align: right;
-    font-size: 12px;
-    font-family: 'Helvetica CY', Arial, sans-serif;
+    font-size: 10px;
 }
 
