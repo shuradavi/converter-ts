@@ -9,7 +9,4 @@ export const getData = async () => {
 	} catch (error) {
 		new Error('Error >>> ', error)
 	}
-	
 }
-
-export const currenciesMap = getData()
