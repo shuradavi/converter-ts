@@ -28,6 +28,8 @@ body {
 	width: 850px;
 	margin: 0 auto;
 	position: relative;
+	display: flex;
+	justify-content: center;
 }
 .converter-box {
 	display: flex;
@@ -114,14 +116,14 @@ body {
 	max-width: 850px;
     padding: 20px 30px;
     position: absolute;
-    top: 200px;
+    top: 100px;
     z-index: 105;
     background: #fff;
     box-shadow: 0 8px 40px 0 rgba(0,0,0,.2);
     border-radius: 4px;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .calc-currency-column {
