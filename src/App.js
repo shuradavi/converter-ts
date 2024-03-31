@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Converter from './components/Converter';
 
 const App =  () => {
-	const [inputValue, setInputValue] = useState('');	// входная сумма
-	const [outputValue, setOutputValue] = useState('');	// сумма на выходе
-	const [inputCurrency, setInputCurrency] = useState('RUR');	//  входная валюта
-	const [inputSelect, setInputSelect] = useState(false);
-	const [outputCurrency, setOutputCurrency] = useState('USD');	// валюта на выходе	
+	// const [inputValue, setInputValue] = useState('');	// входная сумма
+	// const [outputValue, setOutputValue] = useState('');	// сумма на выходе
+	
+	// const [inputSelect, setInputSelect] = useState(false);
 	
 
 	
