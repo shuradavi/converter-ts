@@ -9,8 +9,8 @@ const Converter = () => {
 	const [isFormOpen, setForm] = useState(false);	// состояние формы валют
 	const [currencies, setCurrencies] = useState(null);	// курс валют
 	const [currentSide, setCurrentSide] = useState(sideInitialValue) // принадлежность открытой формы с валютами левой или правой части
-	const [fromCurrency, setFromCurrency] = useState('RUR');	//  валюта from
-	const [toCurrency, setToCurrency] = useState('USD');	//  валюта to
+	const [fromCurrencyName, setFromCurrencyName] = useState('RUR');	//  валюта from
+	const [toCurrencyName, setToCurrencyName] = useState('USD');	//  валюта to
 	const [fromValue, setFromValue] = useState('')
 	const [toValue, setToValue] = useState('')
 
@@ -23,12 +23,12 @@ const Converter = () => {
 	}, [])
 	useEffect(() => {
 		onChangeFromValue(fromValue)
-	}, [fromCurrency])
+	}, [fromCurrencyName])
 
 	useEffect(() => {
-		onChangeToValue(toValue)
-	}, [toCurrency])
- 
+		onChangeFromValue(fromValue)
+	}, [toCurrencyName])
+	
 	const openForm = (side) => {
 		setCurrentSide(side)
 		!isFormOpen && setForm(true)
@@ -38,17 +38,17 @@ const Converter = () => {
 		setForm(false)
 	}
 	const selectCurrencyFromForm = (e) => {
-		currentSide === 'from' ?
-		setFromCurrency(e.currentTarget.children[1].textContent) :
-		setToCurrency(e.currentTarget.children[1].textContent)
+		currentSide === 'from'
+			?	setFromCurrencyName(e.currentTarget.children[1].textContent)
+			:	setToCurrencyName(e.currentTarget.children[1].textContent)
 		setCurrentSide(sideInitialValue)
 		closeForm()
 	}
 
 	const onChangeFromValue = (value) => {
 		if (Boolean(currencies)) {
-			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrency);
-			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrency);
+			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrencyName);
+			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrencyName);
 			const rateFrom = fromCurrencyRate.Value / fromCurrencyRate.Nominal; //		Курс входящей валюты к рублю
 			const rateTo = toCurrencyRate.Value / toCurrencyRate.Nominal;
 			const result = value * (rateFrom / rateTo)
@@ -61,8 +61,8 @@ const Converter = () => {
 
 	const onChangeToValue = (value) => {
 		if (Boolean(currencies)) {
-			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrency);
-			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrency);
+			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrencyName);
+			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrencyName);
 			const rateFrom = fromCurrencyRate.Value / fromCurrencyRate.Nominal; //		Курс входящей валюты к рублю
 			const rateTo = toCurrencyRate.Value / toCurrencyRate.Nominal;
 			const result = value * (rateTo / rateFrom)
@@ -73,6 +73,11 @@ const Converter = () => {
 		}
 	}
 
+	const calcExchangeRate = (toCurrencyName, fromCurrencyName, currencies) => {
+		// const fromCurrency
+	}
+
+	calcExchangeRate(fromCurrencyName)
 	return (
 		<>		
 			<h1>Конвертер валют</h1>
@@ -85,9 +90,8 @@ const Converter = () => {
 							openForm={openForm}
 							closeForm={closeForm}
 							currencies={currencies}
-							activeCurrency={fromCurrency}
-							directQuote
-							setActiveCurrency={setFromCurrency}
+							activeCurrencyName={fromCurrencyName}
+							setActiveCurrencyName={setFromCurrencyName}
 						/>
 						<div className='converter-center'>
 							<div className='converter-center-reverse'></div>
@@ -98,8 +102,8 @@ const Converter = () => {
 							openForm={openForm}
 							closeForm={closeForm}
 							currencies={currencies}
-							activeCurrency={toCurrency}
-							setActiveCurrency={setToCurrency}
+							activeCurrency={toCurrencyName}
+							setActiveCurrency={setToCurrencyName}
 						/>
 					</div>
 					{isFormOpen && <CurrenciesForm currencies={currencies} selectCurrency={selectCurrencyFromForm}/>}
