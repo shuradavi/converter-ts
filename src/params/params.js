@@ -2,8 +2,6 @@ export const exception = ['USD', 'EUR', 'GBP', 'VND', 'HKD', 'GEL', 'EGP', 'IDR'
 
 export const defaultCurrencies = ['RUR', 'USD', 'EUR', 'GBP'];	// валюты по умолчанию
 
-export const sideInitialValue = '';
-
 export const RUR = {
 	ID: 'R1',
 	Name: 'Российский рубль',

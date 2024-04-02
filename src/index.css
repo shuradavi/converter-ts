@@ -81,6 +81,9 @@ body {
 	border-radius: 0 4px 4px 0;
 }
 .side-switcher-item.active:last-child {
+	background:url(https://s.rbk.ru/v5_cash_static/cash-1.5.98/styles/images/angle-arrow-up-white.svg) no-repeat 50px;
+	background-position: 50%;
+	background-size: 12px;
 	color: #fff;
 	background-color: #16b67f;
 }

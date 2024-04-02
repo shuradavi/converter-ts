@@ -1,51 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { defaultCurrencies } from '../params/params';
-import { sortFavoriteCurrencies, setCurrenciesList  } from '../functions/functions';
+import { sortFavoriteCurrencies, setCurrenciesList } from '../functions/functions';
+import CurrenciesForm from './CurrenciesForm'
 
-export const ConverterSide = ({inputValue, onChangeValue, title, side,  openForm, closeForm, currencies, activeCurrencyName, setActiveCurrencyName }) => {
+function useOutsideAlerter(ref, state, setState) {
+	useEffect(() => {
+		function handleClickOutside(event) {
+		  console.log('1st');
+			if (ref.current && !ref.current.contains(event.target)) {
+
+		}
+	  }
+	  document.addEventListener("mousedown", handleClickOutside);
+	  return () => {
+		document.removeEventListener("mousedown", handleClickOutside);
+	  };
+	}, [ref]);
+  }
+
+export const ConverterSide = ({inputValue, onChangeValue, title, currencies, activeCurrencyName, setActiveCurrencyName }) => {
 	const [onPanelCurrencies, setOnPanelCurrencies] = useState(defaultCurrencies);
+	const [isFormOpen, setForm] = useState(false);	// состояние формы
+
+	const wrapperRef = useRef(null);
+	useOutsideAlerter(wrapperRef);
+	// useEffect(() => {
+	// 	// const closeForm = (e) => {
+	// 	// 	if (!e.target.closest('.active')) {
+	// 	// 		console.log('clicked outside');
+	// 	// 		if (isFormOpen) {
+	// 	// 			setForm(false)
+	// 	// 		}
+	// 	// 	} 
+	// 	// }
+	// 	// document.body.addEventListener('click', closeForm)
+	// 	// const removeClass = (e) => {		// Удаляем класс 'active' с селектора на панели валют
+	// 	// 	if (!e.target.closest('.arrow')) {
+	// 	// 		setForm(prev => !prev)
+	// 	// 		const activeArrows = document.querySelectorAll('.arrow.active')
+	// 	// 		activeArrows.forEach(el => el.classList.remove('active'))
+	// 	// 	}
+	// 	// }
+	// 	if (currencies) {
+	// 		const favoriteCurrencies = sortFavoriteCurrencies(currencies);
+	// 		const arrayOfFavoriteCharCodes = setCurrenciesList(favoriteCurrencies);
+	// 	if (arrayOfFavoriteCharCodes.indexOf(activeCurrencyName) === -1) {
+	// 		arrayOfFavoriteCharCodes.splice(-1, 1, activeCurrencyName)
+	// 		setOnPanelCurrencies(arrayOfFavoriteCharCodes);
+	// 	} else {
+	// 		const indexOfRepeatedCharCode = arrayOfFavoriteCharCodes.indexOf(activeCurrencyName)
+	// 		arrayOfFavoriteCharCodes.splice(indexOfRepeatedCharCode, 1, activeCurrencyName)
+	// 		setOnPanelCurrencies(arrayOfFavoriteCharCodes);
+	// 		}
+	// 	}
+	// 	// return () => document.body.removeEventListener('click', closeForm)
+	// }, [isFormOpen,activeCurrencyName])
 
 	
-	useEffect(() => {
-		const removeClass = (e) => {		// Удаляем класс 'active' с селектора на панели валют
-			if (!e.target.closest('.arrow')) {
-				closeForm()
-				const activeArrows = document.querySelectorAll('.arrow.active')
-				activeArrows.forEach(el => el.classList.remove('active'))
-			}
+	const onSelectClickHandler = () => {
+		if (!isFormOpen) {
+			setForm(true);
 		}
-		document.body.addEventListener('click', removeClass)
-		if (currencies) {
-			const favoriteCurrencies = sortFavoriteCurrencies(currencies);
-			const arrayOfFavoriteCharCodes = setCurrenciesList(favoriteCurrencies);
-		if (arrayOfFavoriteCharCodes.indexOf(activeCurrencyName) === -1) {
-			arrayOfFavoriteCharCodes.splice(-1, 1, activeCurrencyName)
-			setOnPanelCurrencies(arrayOfFavoriteCharCodes);
-		} else {
-			const indexOfRepeatedCharCode = arrayOfFavoriteCharCodes.indexOf(activeCurrencyName)
-			arrayOfFavoriteCharCodes.splice(indexOfRepeatedCharCode, 1, activeCurrencyName)
-			setOnPanelCurrencies(arrayOfFavoriteCharCodes);
-			}
-		}
-		return () => document.body.removeEventListener('click', removeClass)
-	}, [activeCurrencyName])
-
-	const onSelectClickHandler = (e) => {
-		const previousActiveArrowElement = document.querySelector('.arrow.active')
-		if (previousActiveArrowElement) {
-			previousActiveArrowElement.classList.remove('active')
-		}
-		const el = e.currentTarget
-		el.classList.add('active')
-		openForm(side)
-	}
+	} 
 
 	const onPanelCurrencyClickHandler = (cur) => {
-		// setActiveCurrencyName(cur.target.textContent)
+		setActiveCurrencyName(cur.target.textContent)
 	}
+
+
+	
+	
 	
 	return (
 		<div className='converter-side'>
+			{isFormOpen && <CurrenciesForm currencies={currencies}/>}
 			<div className='side-title'>{title}</div>
 			<div className='side-switcher'>
 				{onPanelCurrencies.map((cur, idx) => (
@@ -58,10 +86,10 @@ export const ConverterSide = ({inputValue, onChangeValue, title, side,  openForm
 					</div>
 				))}
 				<div
-					className='side-switcher-item arrow'
-					onClick={e => onSelectClickHandler(e)}
+					ref={wrapperRef}
+					className={isFormOpen ? 'side-switcher-item arrow active' : 'side-switcher-item arrow'}
+					onClick={onSelectClickHandler}
 				>
-						{side}
 				</div>
 			</div>
 			<div className='side-input-box'>
