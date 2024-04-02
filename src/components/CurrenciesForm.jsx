@@ -5,7 +5,7 @@ const CurrenciesForm = ({ currencies, selectCurrency }) => {
 		<div className='calc-currency'>
 			<div className='calc-currency-column'>{currencies.slice(0, 11).map((item) => {
 				return (
-					<div key={item.ID} className='calc-currency-row' onClick={selectCurrency}>
+					<div key={item.ID} className='calc-currency-row' onClick={e => selectCurrency(e)}>
 						<div className='cacl-currency-name'>{item.Name}</div>
 						<div className='cacl-currency-sign'>{item.CharCode}</div>
 					</div>
@@ -13,13 +13,13 @@ const CurrenciesForm = ({ currencies, selectCurrency }) => {
 			})}
 			</div>
 			<div className='calc-currency-column calc-currency-column-center'>{currencies.slice(11, 22).map(item =>
-				<div key={item.ID} className='calc-currency-row' onClick={selectCurrency}>
+				<div key={item.ID} className='calc-currency-row' onClick={e => selectCurrency(e)}>
 					<div className='cacl-currency-name'>{item.Name}</div>
 					<div className='cacl-currency-sign'>{item.CharCode}</div>
 				</div>)}
 			</div>
 			<div className='calc-currency-column'>{currencies.slice(23, (currencies.length)).map(item =>
-				<div key={item.ID} className='calc-currency-row' onClick={selectCurrency}>
+				<div key={item.ID} className='calc-currency-row' onClick={e => selectCurrency(e)}>
 					<div className='cacl-currency-name'>{item.Name}</div>
 					<div className='cacl-currency-sign'>{item.CharCode}</div>
 				</div>)}
