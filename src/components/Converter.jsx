@@ -71,6 +71,7 @@ const Converter = () => {
 							onChangeValue={onChangeFromValue}
 							currencies={currencies}
 							activeCurrencyName={fromCurrencyName}
+							secondCurrencyName={toCurrencyName}
 							setActiveCurrencyName={setFromCurrencyName}
 						/>
 						<div className='converter-center'>
@@ -81,6 +82,7 @@ const Converter = () => {
 							onChangeValue={onChangeToValue}
 							currencies={currencies}
 							activeCurrencyName={toCurrencyName}
+							secondCurrencyName={fromCurrencyName}
 							setActiveCurrencyName={setToCurrencyName}
 						/>
 					</div>

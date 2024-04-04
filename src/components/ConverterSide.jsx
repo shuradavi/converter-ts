@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { defaultCurrencies } from '../params/params';
 import { sortFavoriteCurrencies, setCurrenciesList } from '../functions/functions';
 import CurrenciesForm from './CurrenciesForm'
+import ExchangeRate from './ExchangeRate';
 
-export const ConverterSide = ({inputValue, onChangeValue, title, currencies, activeCurrencyName, setActiveCurrencyName }) => {
+export const ConverterSide = ({inputValue, onChangeValue, title, currencies, activeCurrencyName, secondCurrencyName, setActiveCurrencyName }) => {
 	const [onPanelCurrencies, setOnPanelCurrencies] = useState(defaultCurrencies);
 	const [isFormOpen, setForm] = useState(false);	// состояние формы
 	const wrapperRef = useRef(null);
@@ -19,12 +20,10 @@ export const ConverterSide = ({inputValue, onChangeValue, title, currencies, act
 			const arrayOfFavoriteCharCodes = setCurrenciesList(favoriteCurrencies);
 		if (arrayOfFavoriteCharCodes.indexOf(activeCurrencyName) === -1) {
 			arrayOfFavoriteCharCodes.splice(-1, 1, activeCurrencyName)
-			console.log('aofcc: >>>', arrayOfFavoriteCharCodes);
 			setOnPanelCurrencies(arrayOfFavoriteCharCodes);
 		} else {
 			const indexOfRepeatedCharCode = arrayOfFavoriteCharCodes.indexOf(activeCurrencyName)
 			arrayOfFavoriteCharCodes.splice(indexOfRepeatedCharCode, 1, activeCurrencyName)
-			console.log('aofcc: >>>', arrayOfFavoriteCharCodes);
 			setOnPanelCurrencies(arrayOfFavoriteCharCodes);
 			}
 		}
@@ -33,10 +32,9 @@ export const ConverterSide = ({inputValue, onChangeValue, title, currencies, act
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClickOutside)
 		console.log('useEffect at ConvertSide');
-		// setFavoriteCurrencies()
+		setFavoriteCurrencies()
 		return () => document.body.removeEventListener('mousedown', handleClickOutside)
-	}, [ activeCurrencyName])
-
+	}, [isFormOpen])
 	
 	const onSelectClickHandler = () => {
 		if (!isFormOpen) {
@@ -49,14 +47,15 @@ export const ConverterSide = ({inputValue, onChangeValue, title, currencies, act
 	}
 
 	const selectCurrency = (e) => {
-		console.log('event: >>>', e);
 		setActiveCurrencyName(e.currentTarget.children[1].textContent)
 		setForm(false)
 	}
 
 	return (
 		<div className='converter-side'>
-			{isFormOpen && <CurrenciesForm currencies={currencies} selectCurrency={selectCurrency} />}
+			<div ref={wrapperRef}>
+				{isFormOpen && <CurrenciesForm  currencies={currencies} onCurrencyClickHandler={selectCurrency} />}
+			</div>
 			<div className='side-title'>{title}</div>
 			<div className='side-switcher'>
 				{onPanelCurrencies.map((cur, idx) => (
@@ -69,7 +68,7 @@ export const ConverterSide = ({inputValue, onChangeValue, title, currencies, act
 					</div>
 				))}
 				<div
-					ref={wrapperRef}
+					// ref={wrapperRef}
 					className={isFormOpen ? 'side-switcher-item arrow active' : 'side-switcher-item arrow'}
 					onClick={onSelectClickHandler}
 				>
@@ -82,9 +81,10 @@ export const ConverterSide = ({inputValue, onChangeValue, title, currencies, act
 					maxLength='10'
 					type='number'
 				/>
-				<div className='side-input-box-rate'>
-					{/* {`1 ${activeCurrencyName} = `} */}
-				</div>
+				{currencies && <ExchangeRate
+					mainCurrency={currencies.find(cur => cur.CharCode === activeCurrencyName)}
+					secondCurrency={currencies.find(cur => cur.CharCode === secondCurrencyName)}
+				/>}
 			</div>
 		</div>
 	);
