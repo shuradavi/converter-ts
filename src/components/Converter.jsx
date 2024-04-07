@@ -13,19 +13,24 @@ const Converter = () => {
 
 
 	useEffect(() => {
-		getData()
+		
+		if (!currencies) {
+			getData()
 			.then(res => {
-				const resultArray = sortData(res);
-				setCurrencies(resultArray);
-			})
-	}, [])
-	useEffect(() => {
+			const resultArray = sortData(res);
+			setCurrencies(resultArray);
+		})
+		}
 		onChangeFromValue(fromValue)
-	}, [fromCurrencyName])
+		onChangeFromValue(fromValue)
+	}, [fromCurrencyName, toCurrencyName])
+	// useEffect(() => {
+	// 	onChangeFromValue(fromValue)
+	// }, [fromCurrencyName])
 
-	useEffect(() => {
-		onChangeFromValue(fromValue)
-	}, [toCurrencyName])
+	// useEffect(() => {
+	// 	onChangeFromValue(fromValue)
+	// }, [toCurrencyName])
 	
 	const onChangeFromValue = (value) => {
 		if (Boolean(currencies)) {

@@ -34,7 +34,7 @@ export const sortFavoriteCurrencies = (currencies) => {
 	return [RUR, ...favoriteCurrencies];
 }
 
-export const setCurrenciesList = (currencies) => {
+export const getCharCodesList = (currencies) => {
 	return currencies.map(cur => cur.CharCode)
 }
 
