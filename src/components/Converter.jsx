@@ -13,8 +13,7 @@ const Converter = () => {
 
 
 	useEffect(() => {
-		
-		if (!currencies) {
+		if (!Boolean(currencies)) {
 			getData()
 			.then(res => {
 			const resultArray = sortData(res);
@@ -22,18 +21,10 @@ const Converter = () => {
 		})
 		}
 		onChangeFromValue(fromValue)
-		onChangeFromValue(fromValue)
 	}, [fromCurrencyName, toCurrencyName])
-	// useEffect(() => {
-	// 	onChangeFromValue(fromValue)
-	// }, [fromCurrencyName])
-
-	// useEffect(() => {
-	// 	onChangeFromValue(fromValue)
-	// }, [toCurrencyName])
 	
 	const onChangeFromValue = (value) => {
-		if (Boolean(currencies)) {
+		if (Boolean(currencies) && Boolean(currencies.length)) {
 			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrencyName);
 			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrencyName);
 			const rateFrom = fromCurrencyRate.Value / fromCurrencyRate.Nominal; //		Курс входящей валюты к рублю
@@ -47,7 +38,7 @@ const Converter = () => {
 	}
 
 	const onChangeToValue = (value) => {
-		if (Boolean(currencies)) {
+		if (Boolean(currencies) && Boolean(currencies.length)) {
 			const fromCurrencyRate = currencies.find(cur => cur.CharCode === fromCurrencyName);
 			const toCurrencyRate = currencies.find(cur => cur.CharCode === toCurrencyName);
 			const rateFrom = fromCurrencyRate.Value / fromCurrencyRate.Nominal; //		Курс входящей валюты к рублю
